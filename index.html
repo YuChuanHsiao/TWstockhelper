@@ -1,515 +1,505 @@
 <!DOCTYPE html>
 <html lang="zh-TW" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>存股小幫手 Pro</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-        }
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- 引入 FontAwesome 圖示 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>存股小幫手 Pro</title>
+<!-- Tailwind 已預先編譯 (v3.4.17, 僅含本頁用到的樣式),不再依賴 Play CDN -->
+<style>*,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgba(59,130,246,.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/*! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com*/*,:after,:before{box-sizing:border-box;border:0 solid #e5e7eb}:after,:before{--tw-content:""}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;-o-tab-size:4;tab-size:4;font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0}fieldset,legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::-moz-placeholder,textarea::-moz-placeholder{opacity:1;color:#9ca3af}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.relative{position:relative}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:.25rem}.mr-1{margin-right:.25rem}.mr-2{margin-right:.5rem}.mr-auto{margin-right:auto}.mt-1{margin-top:.25rem}.mt-2{margin-top:.5rem}.mt-4{margin-top:1rem}.block{display:block}.flex{display:flex}.grid{display:grid}.h-4{height:1rem}.h-fit{height:-moz-fit-content;height:fit-content}.max-h-40{max-height:10rem}.min-h-screen{min-height:100vh}.\!w-16{width:4rem!important}.\!w-28{width:7rem!important}.\!w-auto{width:auto!important}.w-4{width:1rem}.w-full{width:100%}.max-w-7xl{max-width:80rem}.flex-grow{flex-grow:1}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-between{justify-content:space-between}.gap-2{gap:.5rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-6{gap:1.5rem}.space-y-2>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.5rem*var(--tw-space-y-reverse))}.space-y-3>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(.75rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(.75rem*var(--tw-space-y-reverse))}.space-y-4>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem*var(--tw-space-y-reverse))}.space-y-5>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.25rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.25rem*var(--tw-space-y-reverse))}.space-y-6>:not([hidden])~:not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem*(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem*var(--tw-space-y-reverse))}.overflow-y-auto{overflow-y:auto}.rounded{border-radius:.25rem}.rounded-xl{border-radius:.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-l-4{border-left-width:4px}.\!border-rose-400{--tw-border-opacity:1!important;border-color:rgb(251 113 133/var(--tw-border-opacity,1))!important}.\!border-l-cyan-500{--tw-border-opacity:1!important;border-left-color:rgb(6 182 212/var(--tw-border-opacity,1))!important}.\!border-l-emerald-500{--tw-border-opacity:1!important;border-left-color:rgb(16 185 129/var(--tw-border-opacity,1))!important}.\!border-l-indigo-500{--tw-border-opacity:1!important;border-left-color:rgb(99 102 241/var(--tw-border-opacity,1))!important}.bg-indigo-50\/60{background-color:rgba(238,242,255,.6)}.bg-slate-100{--tw-bg-opacity:1;background-color:rgb(241 245 249/var(--tw-bg-opacity,1))}.bg-slate-50{--tw-bg-opacity:1;background-color:rgb(248 250 252/var(--tw-bg-opacity,1))}.\!p-1{padding:.25rem!important}.p-2{padding:.5rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-2{padding-left:.5rem;padding-right:.5rem}.py-2{padding-top:.5rem}.pb-2,.py-2{padding-bottom:.5rem}.pr-1{padding-right:.25rem}.pt-2{padding-top:.5rem}.text-center{text-align:center}.text-right{text-align:right}.font-sans{font-family:ui-sans-serif,system-ui,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xs{font-size:.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.leading-relaxed{line-height:1.625}.text-emerald-600{--tw-text-opacity:1;color:rgb(5 150 105/var(--tw-text-opacity,1))}.text-indigo-600{--tw-text-opacity:1;color:rgb(79 70 229/var(--tw-text-opacity,1))}.text-indigo-700{--tw-text-opacity:1;color:rgb(67 56 202/var(--tw-text-opacity,1))}.text-rose-500{--tw-text-opacity:1;color:rgb(244 63 94/var(--tw-text-opacity,1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105/var(--tw-text-opacity,1))}.text-slate-800{--tw-text-opacity:1;color:rgb(30 41 59/var(--tw-text-opacity,1))}.accent-indigo-600{accent-color:#4f46e5}.accent-rose-500{accent-color:#f43f5e}.filter{filter:var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)}.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.duration-300{transition-duration:.3s}.hover\:text-rose-700:hover{--tw-text-opacity:1;color:rgb(190 18 60/var(--tw-text-opacity,1))}.hover\:underline:hover{text-decoration-line:underline}.dark\:border-slate-700:is(.dark *){--tw-border-opacity:1;border-color:rgb(51 65 85/var(--tw-border-opacity,1))}.dark\:bg-slate-900:is(.dark *){--tw-bg-opacity:1;background-color:rgb(15 23 42/var(--tw-bg-opacity,1))}.dark\:bg-slate-900\/50:is(.dark *){background-color:rgba(15,23,42,.5)}.dark\:text-cyan-400:is(.dark *){--tw-text-opacity:1;color:rgb(34 211 238/var(--tw-text-opacity,1))}.dark\:text-emerald-400:is(.dark *){--tw-text-opacity:1;color:rgb(52 211 153/var(--tw-text-opacity,1))}.dark\:text-rose-400:is(.dark *){--tw-text-opacity:1;color:rgb(251 113 133/var(--tw-text-opacity,1))}.dark\:text-slate-200:is(.dark *){--tw-text-opacity:1;color:rgb(226 232 240/var(--tw-text-opacity,1))}.dark\:text-slate-400:is(.dark *){--tw-text-opacity:1;color:rgb(148 163 184/var(--tw-text-opacity,1))}.dark\:text-slate-500:is(.dark *){--tw-text-opacity:1;color:rgb(100 116 139/var(--tw-text-opacity,1))}.dark\:accent-cyan-500:is(.dark *){accent-color:#06b6d4}@media (min-width:768px){.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.md\:flex-row{flex-direction:row}.md\:p-6{padding:1.5rem}}@media (min-width:1024px){.lg\:col-span-1{grid-column:span 1/span 1}.lg\:col-span-2{grid-column:span 2/span 2}.lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}}</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  .inp{width:100%;padding:.5rem;border-radius:.5rem;outline:none;border:1px solid #cbd5e1;background:#fff;color:#1e293b}
+  .dark .inp{background:#0f172a;border-color:#475569;color:#f1f5f9}
+  .inp:disabled{opacity:.4}
+  .inp:focus{box-shadow:0 0 0 2px #818cf8}.dark .inp:focus{box-shadow:0 0 0 2px #06b6d4}
+  .lbl{display:block;font-size:.875rem;font-weight:500;margin-bottom:.25rem;color:#475569}
+  .dark .lbl{color:#94a3b8}
+  .card{background:#fff;border:1px solid #e2e8f0;border-radius:1rem;box-shadow:0 1px 2px rgb(0 0 0/.05)}
+  .dark .card{background:#1e293b;border-color:#334155}
+  .btn{padding:.5rem 1rem;border-radius:.5rem;font-size:.875rem;border:1px solid #cbd5e1;background:#f1f5f9}
+  .dark .btn{background:#334155;border-color:#475569}
+  .btn:hover{filter:brightness(.95)}
+</style>
 </head>
 <body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-sans p-4 md:p-6 min-h-screen transition-colors duration-300">
-    <div class="max-w-7xl mx-auto space-y-6">
-        
-        <!-- 頂部標題與控制按鈕 -->
-        <div class="flex flex-col md:flex-row justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm dark:shadow-lg border dark:border-slate-700 transition-colors duration-300">
-            <h1 class="text-2xl font-bold text-indigo-600 dark:text-cyan-400 mb-4 md:mb-0 tracking-wide"><i class="fa-solid fa-chart-line mr-2"></i>存股小幫手 Pro</h1>
-            <div class="flex flex-wrap gap-3 items-center">
-                <button onclick="toggleDarkMode()" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg text-sm transition-colors border dark:border-slate-600">
-                    <i id="themeIcon" class="fa-solid fa-sun mr-1"></i><span id="themeText">亮色模式</span>
-                </button>
-                <button onclick="exportPNG()" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg text-sm transition-colors border dark:border-slate-600"><i class="fa-solid fa-image mr-1"></i>下載圖表</button>
-                <button onclick="exportCSV()" class="px-4 py-2 bg-indigo-50 dark:bg-cyan-900/40 hover:bg-indigo-100 dark:hover:bg-cyan-800/60 text-indigo-700 dark:text-cyan-300 rounded-lg text-sm transition-colors border dark:border-indigo-100 dark:border-cyan-800"><i class="fa-solid fa-file-csv mr-1"></i>匯出 CSV</button>
-            </div>
-        </div>
+<div class="max-w-7xl mx-auto space-y-6">
 
-        <!-- 黃金總結儀表板 -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm dark:shadow-lg border dark:border-slate-700 border-l-4 border-blue-500 dark:border-l-cyan-500 transition-colors duration-300">
-                <p class="text-sm text-slate-500 dark:text-slate-400 mb-1">最終總資產 (目標達成)</p>
-                <h2 id="dashTotalAsset" class="text-3xl font-bold text-slate-800 dark:text-slate-100">0</h2>
-                <p id="dashInflationNote" class="text-xs text-rose-500 dark:text-rose-400 mt-2 hidden"><i class="fa-solid fa-circle-info mr-1"></i>已折算 2% 通膨購買力</p>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm dark:shadow-lg border dark:border-slate-700 border-l-4 border-indigo-400 dark:border-l-indigo-500 transition-colors duration-300">
-                <p class="text-sm text-slate-500 dark:text-slate-400 mb-1">總投入成本 (含加碼)</p>
-                <h2 id="dashTotalCost" class="text-2xl font-bold text-slate-700 dark:text-slate-200">0</h2>
-            </div>
-            <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm dark:shadow-lg border dark:border-slate-700 border-l-4 border-emerald-400 dark:border-l-emerald-500 transition-colors duration-300">
-                <p class="text-sm text-slate-500 dark:text-slate-400 mb-1">總投資淨利 (資本利得 + 配息)</p>
-                <h2 id="dashTotalProfit" class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">0</h2>
-                <p id="dashTaxNote" class="text-xs text-rose-500 dark:text-rose-400 mt-2 hidden"><i class="fa-solid fa-circle-info mr-1"></i>已扣除二代健保補充保費</p>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- 左側控制面板 -->
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-lg border dark:border-slate-700 space-y-5 lg:col-span-1 h-fit transition-colors duration-300">
-                
-                <!-- 標的快速選取與自訂新增區塊 -->
-                <div class="space-y-3 bg-indigo-50/50 dark:bg-slate-900/50 p-4 rounded-xl border dark:border-slate-700">
-                    <label class="block text-sm font-bold text-indigo-700 dark:text-cyan-400"><i class="fa-solid fa-wallet mr-1"></i>選擇或新增投資標的</label>
-                    <select id="stockSelector" class="w-full p-2 bg-white dark:bg-slate-800 border dark:border-slate-600 rounded-lg text-sm text-slate-800 dark:text-slate-200 outline-none focus:ring-2 focus:ring-indigo-400 dark:focus:ring-cyan-500" onchange="applyStockPreset()">
-                        <option value="custom">-- 手動自訂參數 --</option>
-                        <option value="0050">0050 元大台灣50 (報酬6%, 殖利率3%)</option>
-                        <option value="006208">006208 富邦台50 (報酬6%, 殖利率3%)</option>
-                        <option value="00878">00878 國泰永續高股息 (報酬4%, 殖利率6%)</option>
-                        <option value="00919">00919 群益台灣精選高息 (報酬3%, 殖利率8%)</option>
-                        <option value="SP500">VOO / S&P 500 美股大盤 (報酬8%, 殖利率1.5%)</option>
-                    </select>
-
-                    <!-- 新增自訂股票的小表單 -->
-                    <div class="pt-2 border-t dark:border-slate-700 space-y-2">
-                        <p class="text-xs text-slate-500 dark:text-slate-400">將目前的參數儲存為新標的：</p>
-                        <div class="flex gap-2">
-                            <input type="text" id="customStockName" placeholder="輸入股票名稱 (例如 2330 台積電)" class="w-full p-1.5 bg-white dark:bg-slate-800 border dark:border-slate-600 rounded text-xs text-slate-800 dark:text-slate-200 outline-none">
-                            <button onclick="saveCustomStock()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-xs transition-colors whitespace-nowrap"><i class="fa-solid fa-plus mr-1"></i>儲存</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="space-y-4">
-                    <h3 class="text-lg font-bold text-slate-700 dark:text-slate-200 border-b dark:border-slate-700 pb-2">基礎參數設定</h3>
-                    
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">初始本金 (元)</label>
-                        <input type="number" id="inputInitial" class="w-full p-2 bg-white dark:bg-slate-900 border dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-400 dark:focus:ring-cyan-500 outline-none text-slate-800 dark:text-slate-100 transition-colors" value="100000" onchange="calculate()">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">每月定期定額 (元)</label>
-                        <input type="number" id="inputMonthly" class="w-full p-2 bg-white dark:bg-slate-900 border dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-400 dark:focus:ring-cyan-500 outline-none text-slate-800 dark:text-slate-100 transition-colors" value="10000" onchange="calculate()">
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">預期資本利得 (%)</label>
-                            <input type="number" id="inputCapGain" step="0.1" class="w-full p-2 bg-white dark:bg-slate-900 border dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-400 dark:focus:ring-cyan-500 outline-none text-slate-800 dark:text-slate-100 transition-colors" value="5" onchange="calculate()">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">預期殖利率 (%)</label>
-                            <input type="number" id="inputDivYield" step="0.1" class="w-full p-2 bg-white dark:bg-slate-900 border dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none text-slate-800 dark:text-slate-100 transition-colors" value="4" onchange="calculate()">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1 flex justify-between">
-                            <span>投資年限: <span id="yearLabel" class="text-indigo-600 dark:text-cyan-400 font-bold">20</span> 年</span>
-                        </label>
-                        <input type="range" id="inputYears" min="5" max="40" value="20" class="w-full accent-indigo-600 dark:accent-cyan-500" oninput="document.getElementById('yearLabel').innerText=this.value; calculate()">
-                    </div>
-                </div>
-
-                <div class="space-y-4 pt-2">
-                    <h3 class="text-lg font-bold text-slate-700 dark:text-slate-200 border-b dark:border-slate-700 pb-2">進階策略與稅費</h3>
-                    
-                    <div class="flex items-center justify-between">
-                        <label class="text-sm font-medium text-slate-600 dark:text-slate-400">股息處置</label>
-                        <select id="inputDrip" class="p-1.5 bg-white dark:bg-slate-900 border dark:border-slate-600 rounded text-sm text-slate-800 dark:text-slate-200 outline-none" onchange="calculate()">
-                            <option value="true">自動再投入 (DRIP)</option>
-                            <option value="false">領出現金流</option>
-                        </select>
-                    </div>
-
-                    <div class="flex items-center justify-between">
-                        <label class="text-sm font-medium text-slate-600 dark:text-slate-400">扣除二代健保 (2.11%)</label>
-                        <input type="checkbox" id="inputNHI" class="w-4 h-4 accent-rose-500 rounded bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600" onchange="calculate()">
-                    </div>
-
-                    <div class="flex items-center justify-between">
-                        <label class="text-sm font-medium text-slate-600 dark:text-slate-400">折算通膨購買力 (2%)</label>
-                        <input type="checkbox" id="inputInflation" class="w-4 h-4 accent-rose-500 rounded bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600" onchange="calculate()">
-                    </div>
-                </div>
-
-                <div class="space-y-3 pt-2">
-                    <div class="flex justify-between items-center border-b dark:border-slate-700 pb-2">
-                        <h3 class="text-lg font-bold text-slate-700 dark:text-slate-200">不定期大額加碼</h3>
-                        <button onclick="addExtraRow()" class="text-indigo-600 dark:text-cyan-400 text-sm hover:underline"><i class="fa-solid fa-plus"></i> 新增</button>
-                    </div>
-                    <div id="extraContainer" class="space-y-2 max-h-32 overflow-y-auto pr-1">
-                        <!-- 動態加碼列表 -->
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- 右側圖表區塊 -->
-            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-lg border dark:border-slate-700 lg:col-span-2 flex flex-col transition-colors duration-300">
-                <div class="relative w-full flex-grow" style="height: 450px;">
-                    <canvas id="myChart"></canvas>
-                </div>
-            </div>
-        </div>
+  <header class="card flex flex-col md:flex-row justify-between items-center p-4 gap-3">
+    <h1 class="text-2xl font-bold text-indigo-600 dark:text-cyan-400"><i class="fa-solid fa-chart-line mr-2"></i>存股小幫手 Pro</h1>
+    <div class="flex flex-wrap gap-3">
+      <button id="btnTheme" class="btn" type="button"><i id="themeIcon" class="fa-solid fa-sun mr-1"></i><span id="themeText">亮色模式</span></button>
+      <button id="btnPng" class="btn" type="button"><i class="fa-solid fa-image mr-1"></i>下載圖表</button>
+      <button id="btnCsv" class="btn" type="button"><i class="fa-solid fa-file-csv mr-1"></i>匯出 CSV</button>
     </div>
+  </header>
 
-    <script>
-        // 預設標的庫與自訂標的資料庫
-        let stockPresets = {
-            "0050": { name: "0050 元大台灣50", capGain: 6.0, divYield: 3.0 },
-            "006208": { name: "006208 富邦台50", capGain: 6.0, divYield: 3.0 },
-            "00878": { name: "00878 國泰永續高股息", capGain: 4.0, divYield: 6.0 },
-            "00919": { name: "00919 群益台灣精選高息", capGain: 3.0, divYield: 8.0 },
-            "SP500": { name: "VOO / S&P 500 美股大盤", capGain: 8.0, divYield: 1.5 }
-        };
+  <section class="grid grid-cols-1 md:grid-cols-3 gap-4" aria-live="polite">
+    <div class="card p-5 border-l-4 !border-l-cyan-500">
+      <p class="text-sm text-slate-500 dark:text-slate-400 mb-1">最終總資產 <span id="dashAssetSub"></span></p>
+      <h2 id="dashTotalAsset" class="text-3xl font-bold">0</h2>
+      <p id="dashNote" class="text-xs text-rose-500 dark:text-rose-400 mt-2"></p>
+    </div>
+    <div class="card p-5 border-l-4 !border-l-indigo-500">
+      <p class="text-sm text-slate-500 dark:text-slate-400 mb-1">總投入成本 (含加碼)</p>
+      <h2 id="dashTotalCost" class="text-2xl font-bold">0</h2>
+    </div>
+    <div class="card p-5 border-l-4 !border-l-emerald-500">
+      <p class="text-sm text-slate-500 dark:text-slate-400 mb-1">總投資淨利 (總資產 − 總成本)</p>
+      <h2 id="dashTotalProfit" class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">0</h2>
+      <p id="dashCagr" class="text-xs text-slate-500 dark:text-slate-400 mt-2"></p>
+    </div>
+  </section>
 
-        let currentChartData = {}; 
-        let extraInvestments = []; 
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <aside class="card p-6 space-y-5 lg:col-span-1 h-fit">
+      <div class="space-y-2 p-4 rounded-xl bg-indigo-50/60 dark:bg-slate-900/50 border dark:border-slate-700">
+        <label for="stockSelector" class="text-sm font-bold text-indigo-700 dark:text-cyan-400"><i class="fa-solid fa-wallet mr-1"></i>快速選擇投資標的</label>
+        <select id="stockSelector" class="inp text-sm">
+          <option value="custom">-- 自訂參數 --</option>
+          <option value="0050">0050 元大台灣50</option>
+          <option value="006208">006208 富邦台50</option>
+          <option value="00878">00878 國泰永續高股息</option>
+          <option value="00919">00919 群益台灣精選高息</option>
+          <option value="SP500">VOO / S&amp;P 500 美股大盤</option>
+        </select>
+        <p class="text-xs text-slate-500 dark:text-slate-400">預設值為作者的粗略假設(報酬為費用前價格報酬),非官方數據,請自行查證後調整。</p>
+      </div>
 
-        window.onload = () => {
-            const savedTheme = localStorage.getItem('theme') || 'dark';
-            if (savedTheme === 'light') {
-                document.documentElement.classList.remove('dark');
-                updateThemeButtonUI('light');
-            } else {
-                document.documentElement.classList.add('dark');
-                updateThemeButtonUI('dark');
-            }
+      <div class="space-y-4">
+        <h3 class="text-lg font-bold border-b dark:border-slate-700 pb-2">基礎參數設定</h3>
+        <div><label class="lbl" for="inputInitial">初始本金 (元)</label><input type="number" id="inputInitial" class="inp" min="0" step="1000" value="100000"></div>
+        <div><label class="lbl" for="inputMonthly">每月定期定額 (元)</label><input type="number" id="inputMonthly" class="inp" min="0" step="500" value="10000"></div>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="lbl" for="inputCapGain">預期價格報酬 (%/年)</label><input type="number" id="inputCapGain" class="inp" step="0.1" min="-20" max="50" value="5"></div>
+          <div><label class="lbl" for="inputDivYield">預期殖利率 (%/年)</label><input type="number" id="inputDivYield" class="inp" step="0.1" min="0" max="50" value="4"></div>
+        </div>
+        <div>
+          <label class="lbl" for="inputYears">投資年限: <span id="yearLabel" class="text-indigo-600 dark:text-cyan-400 font-bold">20</span> 年</label>
+          <input type="range" id="inputYears" min="5" max="40" value="20" class="w-full accent-indigo-600 dark:accent-cyan-500">
+        </div>
+      </div>
 
-            loadCustomStocks(); // 載入使用者的自訂股票
-            loadData();
-            renderExtraRows();
-            calculate();
-        };
+      <div class="space-y-4 pt-2">
+        <h3 class="text-lg font-bold border-b dark:border-slate-700 pb-2">進階策略與稅費</h3>
+        <div class="flex items-center justify-between gap-2">
+          <label class="text-sm text-slate-600 dark:text-slate-400" for="inputDrip">股息處置</label>
+          <select id="inputDrip" class="inp !w-auto text-sm"><option value="true">自動再投入 (DRIP)</option><option value="false">領出現金</option></select>
+        </div>
+        <div class="flex items-center justify-between gap-2">
+          <label class="text-sm text-slate-600 dark:text-slate-400" for="inputFreq">配息頻率</label>
+          <select id="inputFreq" class="inp !w-auto text-sm"><option value="1">年配</option><option value="2">半年配</option><option value="4">季配</option><option value="12">月配</option></select>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div><label class="lbl" for="inputExpense">內扣費用 (%/年)</label><input type="number" id="inputExpense" class="inp" step="0.01" min="0" max="5" value="0.3"></div>
+          <div><label class="lbl" for="inputFee">買賣手續費率 (%)</label><input type="number" id="inputFee" class="inp" step="0.01" min="0" max="1" value="0.1"></div>
+        </div>
+        <div><label class="lbl" for="inputIncomeTax">股利所得稅有效稅率 (%)</label><input type="number" id="inputIncomeTax" class="inp" step="1" min="0" max="45" value="0"></div>
+        <label class="flex items-center justify-between text-sm text-slate-600 dark:text-slate-400">單次配息 ≥ 2 萬扣二代健保 (2.11%)<input type="checkbox" id="inputNHI" class="w-4 h-4 accent-rose-500"></label>
+        <label class="flex items-center justify-between text-sm text-slate-600 dark:text-slate-400">期末全數賣出,計入證交稅 0.1% 與手續費<input type="checkbox" id="inputSell" class="w-4 h-4 accent-rose-500"></label>
+        <label class="flex items-center justify-between text-sm text-slate-600 dark:text-slate-400">折算通膨購買力 (2%)<input type="checkbox" id="inputInflation" class="w-4 h-4 accent-rose-500"></label>
+      </div>
 
-        // 載入 localStorage 中的自訂股票並更新下拉選單
-        function loadCustomStocks() {
-            const savedCustom = localStorage.getItem('customStockPresets');
-            if (savedCustom) {
-                const customObj = JSON.parse(savedCustom);
-                stockPresets = { ...stockPresets, ...customObj };
-            }
-            updateStockSelectorUI();
-        }
+      <div class="space-y-3 pt-2">
+        <div class="flex justify-between items-center border-b dark:border-slate-700 pb-2">
+          <h3 class="text-lg font-bold">不定期大額加碼</h3>
+          <button id="btnAddExtra" type="button" class="text-indigo-600 dark:text-cyan-400 text-sm hover:underline"><i class="fa-solid fa-plus"></i> 新增</button>
+        </div>
+        <div id="extraContainer" class="space-y-2 max-h-40 overflow-y-auto pr-1"></div>
+      </div>
+    </aside>
 
-        // 更新下拉選單的 HTML 選項
-        function updateStockSelectorUI(selectedKey = 'custom') {
-            const selector = document.getElementById('stockSelector');
-            selector.innerHTML = `<option value="custom">-- 手動自訂參數 --</option>`;
-            
-            for (const [key, item] of Object.entries(stockPresets)) {
-                selector.innerHTML += `<option value="${key}">${item.name} (報酬${item.capGain}%, 殖利率${item.divYield}%)</option>`;
-            }
-            selector.value = selectedKey;
-        }
+    <section class="card p-6 lg:col-span-2 flex flex-col">
+      <div class="relative w-full" style="height:450px">
+        <canvas id="myChart" role="img" aria-label="各年度累積投入本金、資本利得與配息的堆疊長條圖"></canvas>
+      </div>
+      <p class="text-xs text-slate-500 dark:text-slate-400 mt-4 leading-relaxed">
+        <i class="fa-solid fa-circle-info mr-1"></i>模型說明:以「月」為單位試算,每月月初投入、月底計價;配息依所選頻率發放,殖利率以發放當時市值計算。
+        資本利得 = 總資產 − 累積投入 − 累積淨配息(含股息再投入後產生的增值與各項費用損耗)。
+        通膨折算時,資產、成本、淨利皆以同一年度的折現係數換算,因此「總資產 − 成本 = 淨利」恆成立。
+        報酬率為固定假設,未反映市場波動。<strong>本工具僅供試算參考,不構成投資建議。</strong>
+      </p>
+    </section>
+  </div>
 
-        // 儲存使用者輸入的新股票
-        function saveCustomStock() {
-            const nameInput = document.getElementById('customStockName').value.trim();
-            if (!nameInput) {
-                alert('請輸入股票名稱！');
-                return;
-            }
-            const capGain = Number(document.getElementById('inputCapGain').value);
-            const divYield = Number(document.getElementById('inputDivYield').value);
-            
-            const customKey = 'custom_' + Date.now();
-            stockPresets[customKey] = { name: nameInput, capGain, divYield };
+  <section class="card p-6 space-y-4">
+    <div class="flex flex-wrap items-end gap-4">
+      <h3 class="text-lg font-bold mr-auto"><i class="fa-solid fa-dice mr-2"></i>情境與風險分析</h3>
+      <div><label class="lbl" for="inputMode">分析方式</label>
+        <select id="inputMode" class="inp text-sm"><option value="scen">三情境 (悲觀/中性/樂觀)</option><option value="mc">蒙地卡羅 (1,000 次)</option></select></div>
+      <div><label class="lbl" for="inputSpread">情境差距 (±%/年)</label><input type="number" id="inputSpread" class="inp !w-28" min="0" max="10" step="0.5" value="3"></div>
+      <div><label class="lbl" for="inputVol">年化波動度 (%)</label><input type="number" id="inputVol" class="inp !w-28" min="0" max="60" step="1" value="15"></div>
+    </div>
+    <div class="relative w-full" style="height:380px"><canvas id="scenChart" role="img" aria-label="不同情境或蒙地卡羅模擬下的總資產走勢折線圖"></canvas></div>
+    <p id="scenSummary" class="text-sm font-medium" aria-live="polite"></p>
+    <p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+      <i class="fa-solid fa-circle-info mr-1"></i>三情境:將價格報酬上下平移相同幅度。蒙地卡羅:每月價格報酬服從對數常態分布,期望值與上方設定一致,但因波動拖累,中位數會低於平均;使用固定亂數種子,結果不會隨每次操作跳動。
+      此區為總資產(帳面,已含通膨折算選項),不含期末賣出稅費。歷史波動不保證重演,過去報酬亦不代表未來。
+    </p>
+  </section>
+</div>
 
-            // 儲存至 localStorage
-            let userCustoms = JSON.parse(localStorage.getItem('customStockPresets') || '{}');
-            userCustoms[customKey] = stockPresets[customKey];
-            localStorage.setItem('customStockPresets', JSON.stringify(userCustoms));
+<script>
+const PRESETS = {
+  "0050":{cap:6,div:3,exp:0.45}, "006208":{cap:6,div:3,exp:0.35},
+  "00878":{cap:4,div:6,exp:0.45}, "00919":{cap:3,div:8,exp:0.50},
+  "SP500":{cap:8,div:1.5,exp:0.03}
+};
+const STORE_KEY = 'stockHelperState_v5';
+const NHI_RATE = 0.0211, NHI_THRESHOLD = 20000, SELL_TAX = 0.001, INFLATION = 0.02;
+const $ = id => document.getElementById(id);
 
-            updateStockSelectorUI(customKey);
-            document.getElementById('customStockName').value = '';
-            alert(`成功將「${nameInput}」加入自選股選單！`);
-        }
+let extras = [];      // [{year, amount}]
+let chartData = null; // 供 CSV 使用
+let chart = null;
 
-        // 套用標的預設值
-        function applyStockPreset() {
-            const selected = document.getElementById('stockSelector').value;
-            if (selected !== 'custom' && stockPresets[selected]) {
-                document.getElementById('inputCapGain').value = stockPresets[selected].capGain;
-                document.getElementById('inputDivYield').value = stockPresets[selected].divYield;
-            }
-            calculate();
-        }
+/* ---------- 工具 ---------- */
+function num(id, min, max, fallback) {
+  let v = parseFloat($(id).value);
+  if (!Number.isFinite(v)) v = fallback;
+  return Math.min(max, Math.max(min, v));
+}
+const fmt = n => new Intl.NumberFormat('zh-TW', {style:'currency', currency:'TWD', maximumFractionDigits:0}).format(n);
+const isDark = () => document.documentElement.classList.contains('dark');
 
-        function toggleDarkMode() {
-            const isDark = document.documentElement.classList.toggle('dark');
-            const theme = isDark ? 'dark' : 'light';
-            localStorage.setItem('theme', theme);
-            updateThemeButtonUI(theme);
-            calculate();
-        }
+/* ---------- 儲存 / 讀取 ---------- */
+const FIELDS = ['stockSelector','inputInitial','inputMonthly','inputCapGain','inputDivYield','inputYears',
+                'inputDrip','inputFreq','inputExpense','inputFee','inputIncomeTax','inputMode','inputSpread','inputVol'];
+const CHECKS = ['inputNHI','inputSell','inputInflation'];
 
-        function updateThemeButtonUI(theme) {
-            const icon = document.getElementById('themeIcon');
-            const text = document.getElementById('themeText');
-            if (theme === 'dark') {
-                icon.className = "fa-solid fa-sun mr-1";
-                text.innerText = "亮色模式";
-            } else {
-                icon.className = "fa-solid fa-moon mr-1";
-                text.innerText = "暗色模式";
-            }
-        }
+function saveData() {
+  try {
+    const s = {extras};
+    FIELDS.forEach(f => s[f] = $(f).value);
+    CHECKS.forEach(f => s[f] = $(f).checked);
+    localStorage.setItem(STORE_KEY, JSON.stringify(s));
+  } catch (e) { /* 隱私模式或空間不足:略過 */ }
+}
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return;
+    const s = JSON.parse(raw);
+    FIELDS.forEach(f => { if (s[f] !== undefined && s[f] !== null) $(f).value = s[f]; });
+    CHECKS.forEach(f => { if (typeof s[f] === 'boolean') $(f).checked = s[f]; });
+    extras = Array.isArray(s.extras)
+      ? s.extras.filter(e => e && Number.isFinite(+e.year) && Number.isFinite(+e.amount)).map(e => ({year:+e.year, amount:+e.amount}))
+      : [];
+  } catch (e) {
+    try { localStorage.removeItem(STORE_KEY); } catch (_) {}
+  }
+  $('yearLabel').textContent = $('inputYears').value;
+}
 
-        function addExtraRow(year = 5, amount = 100000) {
-            extraInvestments.push({ year, amount });
-            renderExtraRows();
-            calculate();
-        }
+/* ---------- 主題 ---------- */
+function setTheme(theme) {
+  document.documentElement.classList.toggle('dark', theme === 'dark');
+  $('themeIcon').className = theme === 'dark' ? 'fa-solid fa-sun mr-1' : 'fa-solid fa-moon mr-1';
+  $('themeText').textContent = theme === 'dark' ? '亮色模式' : '暗色模式';
+  try { localStorage.setItem('theme', theme); } catch (e) {}
+}
 
-        function removeExtraRow(index) {
-            extraInvestments.splice(index, 1);
-            renderExtraRows();
-            calculate();
-        }
+/* ---------- 加碼列表 ---------- */
+function renderExtraRows() {
+  const box = $('extraContainer');
+  box.replaceChildren();
+  const years = num('inputYears', 5, 40, 20);
+  if (!extras.length) {
+    const p = document.createElement('p');
+    p.className = 'text-xs text-slate-400 dark:text-slate-500 text-center py-2';
+    p.textContent = '無加碼計畫';
+    box.appendChild(p);
+    return;
+  }
+  extras.forEach((item, i) => {
+    const over = item.year > years;
+    const row = document.createElement('div');
+    row.className = 'p-2 rounded border dark:border-slate-700 bg-slate-50 dark:bg-slate-900 ' + (over ? '!border-rose-400' : '');
+    row.innerHTML = `
+      <div class="flex gap-2 items-center">
+        <span class="text-sm text-slate-600 dark:text-slate-400">第</span>
+        <input type="number" min="1" max="40" step="1" aria-label="加碼年份" data-i="${i}" data-f="year" class="inp !w-16 !p-1 text-sm text-center" value="${item.year}">
+        <span class="text-sm text-slate-600 dark:text-slate-400">年加碼</span>
+        <input type="number" min="0" step="1000" aria-label="加碼金額" data-i="${i}" data-f="amount" class="inp !p-1 text-sm text-right flex-grow" value="${item.amount}">
+        <button type="button" data-del="${i}" aria-label="刪除此加碼" class="text-rose-500 hover:text-rose-700 px-2"><i class="fa-solid fa-trash"></i></button>
+      </div>
+      ${over ? '<p class="text-xs text-rose-500 mt-1">超出投資年限,不會計入</p>' : ''}`;
+    box.appendChild(row);
+  });
+}
 
-        function updateExtra(index, field, value) {
-            extraInvestments[index][field] = Number(value);
-            calculate();
-        }
+/* ---------- 核心試算(逐月) ---------- */
+function simulate(p, growthAt) {
+  const months = p.years * 12;
+  const every = 12 / p.freq;
+  const monthlyGrowth = Math.pow(Math.max(1 + p.cap - p.expense, 0.0001), 1 / 12) - 1;
+  const extraByYear = {};
+  extras.forEach(e => { if (e.year >= 1 && e.year <= p.years) extraByYear[e.year] = (extraByYear[e.year] || 0) + Math.max(0, e.amount); });
 
-        function renderExtraRows() {
-            const container = document.getElementById('extraContainer');
-            container.innerHTML = '';
-            if(extraInvestments.length === 0) {
-                container.innerHTML = '<p class="text-xs text-slate-400 dark:text-slate-500 text-center py-2">無加碼計畫</p>';
-                return;
-            }
-            extraInvestments.forEach((item, index) => {
-                container.innerHTML += `
-                    <div class="flex gap-2 items-center bg-slate-50 dark:bg-slate-900 p-2 rounded border dark:border-slate-700">
-                        <span class="text-sm text-slate-600 dark:text-slate-400">第</span>
-                        <input type="number" min="1" max="40" class="w-16 p-1 bg-white dark:bg-slate-800 border dark:border-slate-600 rounded text-sm text-center text-slate-800 dark:text-slate-200 outline-none" value="${item.year}" onchange="updateExtra(${index}, 'year', this.value)">
-                        <span class="text-sm text-slate-600 dark:text-slate-400">年加碼</span>
-                        <input type="number" class="w-24 p-1 bg-white dark:bg-slate-800 border dark:border-slate-600 rounded text-sm text-right flex-grow text-slate-800 dark:text-slate-200 outline-none" value="${item.amount}" onchange="updateExtra(${index}, 'amount', this.value)">
-                        <button onclick="removeExtraRow(${index})" class="text-rose-500 hover:text-rose-700 px-2 transition-colors"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                `;
-            });
-        }
+  let value = 0, cash = 0, invested = 0, cumDiv = 0, nhiTriggered = false;
+  const rows = [];
 
-        function formatCurrency(num) {
-            return new Intl.NumberFormat('zh-TW', { style: 'currency', currency: 'TWD', maximumFractionDigits: 0 }).format(num);
-        }
+  for (let m = 1; m <= months; m++) {
+    const yr = Math.ceil(m / 12);
+    let contrib = p.monthly;
+    if (m === 1) contrib += p.initial;
+    if ((m - 1) % 12 === 0) contrib += extraByYear[yr] || 0;
 
-        function calculate() {
-            saveData(); 
+    invested += contrib;
+    value += contrib * (1 - p.fee);      // 買進手續費
+    value *= 1 + (growthAt ? growthAt(m) : monthlyGrowth);          // 當月價格變動(已扣內扣費用)
 
-            const initial = Number(document.getElementById('inputInitial').value);
-            const monthly = Number(document.getElementById('inputMonthly').value);
-            const capGain = Number(document.getElementById('inputCapGain').value) / 100;
-            const divYield = Number(document.getElementById('inputDivYield').value) / 100;
-            const years = Number(document.getElementById('inputYears').value);
-            const drip = document.getElementById('inputDrip').value === 'true';
-            const nhiTax = document.getElementById('inputNHI').checked;
-            const inflation = document.getElementById('inputInflation').checked;
+    if (m % every === 0) {
+      const gross = value * p.yield / p.freq;
+      let net = gross;
+      if (p.nhi && gross >= NHI_THRESHOLD) { net -= gross * NHI_RATE; nhiTriggered = true; } // 單次給付判斷
+      net -= gross * p.incomeTax;
+      cumDiv += net;
+      if (p.drip) value += net * (1 - p.fee); else cash += net;
+    }
 
-            let labels = [];
-            let principalData = [];
-            let capGainData = [];
-            let divData = [];
-            
-            let currentPrincipal = initial;
-            let totalInvested = initial; 
-            let currentCapGain = 0;
-            let currentDividend = 0;
+    if (m % 12 === 0) rows.push({invested, cumDiv, total: value + cash});
+  }
+  return {rows, value, cash, invested, nhiTriggered};
+}
 
-            document.getElementById('dashInflationNote').style.display = inflation ? 'block' : 'none';
-            document.getElementById('dashTaxNote').style.display = nhiTax ? 'block' : 'none';
+function calculate() {
+  const p = {
+    initial: num('inputInitial', 0, 1e9, 0),
+    monthly: num('inputMonthly', 0, 1e8, 0),
+    cap: num('inputCapGain', -20, 50, 0) / 100,
+    yield: num('inputDivYield', 0, 50, 0) / 100,
+    years: Math.round(num('inputYears', 5, 40, 20)),
+    expense: num('inputExpense', 0, 5, 0) / 100,
+    fee: num('inputFee', 0, 1, 0) / 100,
+    incomeTax: num('inputIncomeTax', 0, 45, 0) / 100,
+    freq: +$('inputFreq').value || 1,
+    drip: $('inputDrip').value === 'true',
+    nhi: $('inputNHI').checked,
+    sell: $('inputSell').checked,
+    inflation: $('inputInflation').checked
+  };
+  saveData();
+  renderExtraRows();
 
-            for (let i = 1; i <= years; i++) {
-                labels.push(`第 ${i} 年`);
+  const sim = simulate(p);
+  const disc = i => p.inflation ? Math.pow(1 + INFLATION, i) : 1;
 
-                let yearlyExtra = extraInvestments.filter(e => e.year === i).reduce((sum, e) => sum + e.amount, 0);
-                if (yearlyExtra > 0) {
-                    currentPrincipal += yearlyExtra;
-                    totalInvested += yearlyExtra;
-                }
+  const labels = [], principal = [], gain = [], div = [];
+  sim.rows.forEach((r, idx) => {
+    const d = disc(idx + 1);
+    const inv = r.invested / d, dv = r.cumDiv / d, tot = r.total / d;
+    labels.push(`第 ${idx + 1} 年`);
+    principal.push(Math.round(inv));
+    div.push(Math.round(dv));
+    gain.push(Math.round(tot - inv - dv)); // 殘差法,確保三段加總 = 總資產
+  });
 
-                currentPrincipal += (monthly * 12);
-                totalInvested += (monthly * 12);
+  const sellCost = p.sell ? sim.value * (p.fee + SELL_TAX) : 0;
+  const dF = disc(p.years);
+  const finalAsset = (sim.value + sim.cash - sellCost) / dF;
+  const cost = sim.invested / dF;
+  const profit = finalAsset - cost;
 
-                let rawDiv = currentPrincipal * divYield;
-                let actualDiv = rawDiv;
-                
-                if (nhiTax && rawDiv >= 20000) {
-                    actualDiv = rawDiv * (1 - 0.0211);
-                }
+  $('dashTotalAsset').textContent = fmt(finalAsset);
+  $('dashTotalCost').textContent = fmt(cost);
+  $('dashTotalProfit').textContent = fmt(profit);
+  $('dashTotalProfit').classList.toggle('text-rose-500', profit < 0);
+  $('dashAssetSub').textContent = p.sell ? '(已扣賣出稅費)' : '(帳面市值)';
+  $('dashCagr').textContent = cost > 0 ? `淨利為總成本的 ${(profit / cost * 100).toFixed(1)}%` : '';
 
-                if (drip) {
-                    currentPrincipal += actualDiv;
-                } else {
-                    currentDividend += actualDiv;
-                }
+  const notes = [];
+  if (p.inflation) notes.push('已折算 2% 通膨購買力');
+  if (p.nhi) notes.push(sim.nhiTriggered ? '已依「單次配息 ≥ 2 萬」扣二代健保' : `配息頻率下單次未達 2 萬,未觸發二代健保`);
+  $('dashNote').textContent = notes.join('|');
 
-                let yearlyGain = currentPrincipal * capGain;
-                currentCapGain += yearlyGain;
-                currentPrincipal += yearlyGain;
+  chartData = {labels, principal, gain, div, p};
+  drawChart(labels, principal, gain, div, p.drip);
+  renderScenario(p);
+}
 
-                let discountRate = inflation ? Math.pow(1.02, i) : 1;
+/* ---------- 圖表 ---------- */
+function drawChart(labels, principal, gain, div, drip) {
+  const dark = isDark();
+  if (chart) chart.destroy();
+  chart = new Chart($('myChart').getContext('2d'), {
+    type: 'bar',
+    data: { labels, datasets: [
+      {label:'累積投入本金', data:principal, backgroundColor: dark ? '#4f46e5' : '#6366f1', stack:'s'},
+      {label:'資本利得增值', data:gain, backgroundColor: dark ? '#0ea5e9' : '#38bdf8', stack:'s'},
+      {label: drip ? '累積淨配息 (已再投入)' : '累積淨配息 (已領現金)', data:div, backgroundColor: dark ? '#10b981' : '#34d399', stack:'s'}
+    ]},
+    options: {
+      responsive:true, maintainAspectRatio:false, animation:false,
+      interaction:{mode:'index', intersect:false},
+      plugins:{
+        tooltip:{
+          backgroundColor: dark ? 'rgba(15,23,42,.9)' : 'rgba(255,255,255,.95)',
+          titleColor: dark ? '#e2e8f0' : '#1e293b', bodyColor: dark ? '#cbd5e1' : '#475569',
+          footerColor: dark ? '#e2e8f0' : '#1e293b',
+          borderColor: dark ? '#334155' : '#cbd5e1', borderWidth:1,
+          callbacks:{
+            label: c => `${c.dataset.label}: ${fmt(c.raw)}`,
+            footer: items => '總資產: ' + fmt(items.reduce((s, i) => s + i.raw, 0))
+          }
+        },
+        legend:{labels:{color: dark ? '#cbd5e1' : '#475569'}}
+      },
+      scales:{
+        x:{stacked:true, grid:{color: dark ? '#334155' : '#f1f5f9'}, ticks:{color: dark ? '#94a3b8' : '#64748b'}},
+        y:{stacked:true, grid:{color: dark ? '#334155' : '#f1f5f9'}, ticks:{color: dark ? '#94a3b8' : '#64748b',
+           callback: v => Math.abs(v) >= 1e6 ? (v / 1e6) + 'M' : v}}
+      }
+    }
+  });
+}
 
-                principalData.push(Math.round(totalInvested / discountRate));
-                capGainData.push(Math.round(currentCapGain / discountRate));
-                divData.push(Math.round(currentDividend / discountRate));
-            }
+/* ---------- 情境 / 蒙地卡羅 ---------- */
+let chart2 = null;
+function rng(seed) {
+  return () => { seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+}
+function renderScenario(p) {
+  const mode = $('inputMode').value;
+  $('inputSpread').disabled = mode !== 'scen';
+  $('inputVol').disabled = mode !== 'mc';
+  const d = i => p.inflation ? Math.pow(1 + INFLATION, i) : 1;
+  const yearly = (q, g) => simulate(q, g).rows.map((r, i) => r.total / d(i + 1));
+  const base = simulate(p);
+  const labels = base.rows.map((_, i) => `第 ${i + 1} 年`);
+  const costLine = base.rows.map((r, i) => r.invested / d(i + 1));
+  const costF = costLine[costLine.length - 1];
+  const line = (label, data, color, extra = {}) => ({label, data: data.map(Math.round), borderColor: color, backgroundColor: color, pointRadius: 0, borderWidth: 2, tension: .2, ...extra});
+  const ds = [];
+  let summary = '';
 
-            let finalAsset = (drip ? currentPrincipal : currentPrincipal + currentDividend);
-            let finalDiscount = inflation ? Math.pow(1.02, years) : 1;
-            
-            document.getElementById('dashTotalAsset').innerText = formatCurrency(finalAsset / finalDiscount);
-            document.getElementById('dashTotalCost').innerText = formatCurrency(totalInvested);
-            document.getElementById('dashTotalProfit').innerText = formatCurrency((finalAsset - totalInvested) / finalDiscount);
+  if (mode === 'scen') {
+    const s = num('inputSpread', 0, 10, 3) / 100;
+    const sc = [['悲觀', -s, '#f43f5e'], ['中性', 0, '#0ea5e9'], ['樂觀', s, '#10b981']]
+      .map(([n, o, c]) => ({n, o, c, y: yearly({...p, cap: p.cap + o})}));
+    sc.forEach(x => ds.push(line(`${x.n} (價格報酬 ${((p.cap + x.o) * 100).toFixed(1)}%)`, x.y, x.c)));
+    summary = '最終總資產:' + sc.map(x => `${x.n} ${fmt(x.y[x.y.length - 1])}`).join('|');
+  } else {
+    const vol = num('inputVol', 0, 60, 15) / 100, N = 1000, months = p.years * 12, sig = vol / Math.sqrt(12);
+    const mu = Math.log(Math.max(1 + p.cap - p.expense, 1e-4)) / 12;
+    const rand = rng(20260101);
+    const gauss = () => Math.sqrt(-2 * Math.log(1 - rand())) * Math.cos(2 * Math.PI * rand());
+    const paths = [];
+    for (let k = 0; k < N; k++) {
+      const r = new Float64Array(months);
+      for (let m = 0; m < months; m++) r[m] = Math.exp(mu - sig * sig / 2 + sig * gauss()) - 1;
+      paths.push(yearly(p, m => r[m - 1]));
+    }
+    const pct = q => labels.map((_, i) => paths.map(t => t[i]).sort((a, b) => a - b)[Math.min(N - 1, Math.floor(q * N))]);
+    const p10 = pct(.1), p50 = pct(.5), p90 = pct(.9), last = p10.length - 1;
+    ds.push(line('10 分位 (偏差情境)', p10, '#f43f5e'));
+    ds.push(line('90 分位 (偏佳情境)', p90, '#10b981', {fill: '-1', backgroundColor: 'rgba(14,165,233,.12)'}));
+    ds.push(line('中位數', p50, '#0ea5e9', {borderWidth: 3}));
+    const loss = paths.filter(t => t[t.length - 1] < costF).length / N;
+    summary = `最終總資產:10 分位 ${fmt(p10[last])}|中位數 ${fmt(p50[last])}|90 分位 ${fmt(p90[last])}。最終資產低於總投入成本的機率約 ${(loss * 100).toFixed(1)}%。`;
+  }
+  ds.push(line('累積投入成本', costLine, '#94a3b8', {borderDash: [6, 4], borderWidth: 1.5}));
+  $('scenSummary').textContent = summary;
 
-            currentChartData = { labels, principalData, capGainData, divData };
-            drawChart(labels, principalData, capGainData, divData, drip);
-        }
+  const dark = isDark();
+  if (chart2) chart2.destroy();
+  chart2 = new Chart($('scenChart').getContext('2d'), {
+    type: 'line', data: {labels, datasets: ds},
+    options: {
+      responsive: true, maintainAspectRatio: false, animation: false,
+      interaction: {mode: 'index', intersect: false},
+      plugins: {
+        tooltip: {backgroundColor: dark ? 'rgba(15,23,42,.9)' : 'rgba(255,255,255,.95)', titleColor: dark ? '#e2e8f0' : '#1e293b',
+          bodyColor: dark ? '#cbd5e1' : '#475569', borderColor: dark ? '#334155' : '#cbd5e1', borderWidth: 1,
+          callbacks: {label: c => `${c.dataset.label}: ${fmt(c.raw)}`}},
+        legend: {labels: {color: dark ? '#cbd5e1' : '#475569'}}
+      },
+      scales: {
+        x: {grid: {color: dark ? '#334155' : '#f1f5f9'}, ticks: {color: dark ? '#94a3b8' : '#64748b'}},
+        y: {grid: {color: dark ? '#334155' : '#f1f5f9'}, ticks: {color: dark ? '#94a3b8' : '#64748b', callback: v => Math.abs(v) >= 1e6 ? (v / 1e6) + 'M' : v}}
+      }
+    }
+  });
+}
 
-        function drawChart(labels, principal, capGain, dividend, drip) {
-            const ctx = document.getElementById('myChart').getContext('2d');
-            
-            if (window.myChartInstance) {
-                window.myChartInstance.destroy();
-            }
+/* ---------- 匯出 ---------- */
+function download(href, name) {
+  const a = document.createElement('a');
+  a.href = href; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+}
+function exportPNG() {
+  const src = $('myChart');
+  const c = document.createElement('canvas');
+  c.width = src.width; c.height = src.height;
+  const x = c.getContext('2d');
+  x.fillStyle = isDark() ? '#1e293b' : '#ffffff';
+  x.fillRect(0, 0, c.width, c.height);
+  x.drawImage(src, 0, 0);
+  download(c.toDataURL('image/png'), '存股資產成長圖表.png');
+}
+function exportCSV() {
+  if (!chartData) return;
+  const {labels, principal, gain, div, p} = chartData;
+  const meta = [
+    ['初始本金', p.initial], ['每月定期定額', p.monthly], ['價格報酬%', p.cap * 100], ['殖利率%', p.yield * 100],
+    ['年限', p.years], ['股息處置', p.drip ? 'DRIP再投入' : '領現金'], ['配息頻率(次/年)', p.freq],
+    ['內扣費用%', p.expense * 100], ['手續費率%', p.fee * 100], ['股利所得稅率%', p.incomeTax * 100],
+    ['二代健保', p.nhi ? '是' : '否'], ['通膨折算', p.inflation ? '是' : '否']
+  ].map(r => r.join(',')).join('\n');
+  let csv = '\uFEFF' + meta + '\n\n年份,累積投入本金,資本利得增值,累積淨配息,當年度總資產\n';
+  labels.forEach((l, i) => { csv += `${l},${principal[i]},${gain[i]},${div[i]},${principal[i] + gain[i] + div[i]}\n`; });
+  const url = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8;'}));
+  download(url, '存股試算報表.csv');
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
 
-            const isDark = document.documentElement.classList.contains('dark');
+/* ---------- 事件 ---------- */
+function applyPreset() {
+  const s = PRESETS[$('stockSelector').value];
+  if (s) { $('inputCapGain').value = s.cap; $('inputDivYield').value = s.div; $('inputExpense').value = s.exp; }
+  calculate();
+}
+function markCustom() { $('stockSelector').value = 'custom'; }
 
-            window.myChartInstance = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        {
-                            label: '累積投入本金',
-                            data: principal,
-                            backgroundColor: isDark ? '#4f46e5' : '#6366f1', 
-                            stack: 'Stack 0',
-                        },
-                        {
-                            label: '資本利得增值',
-                            data: capGain,
-                            backgroundColor: isDark ? '#0ea5e9' : '#38bdf8', 
-                            stack: 'Stack 0',
-                        },
-                        {
-                            label: drip ? '累積配息 (已再投入)' : '累積已領取配息',
-                            data: dividend,
-                            backgroundColor: isDark ? '#10b981' : '#34d399', 
-                            stack: drip ? 'Stack 0' : 'Stack 1',
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animation: false,
-                    plugins: {
-                        tooltip: {
-                            backgroundColor: isDark ? 'rgba(15, 23, 42, 0.9)' : 'rgba(255, 255, 255, 0.9)',
-                            titleColor: isDark ? '#e2e8f0' : '#1e293b',
-                            bodyColor: isDark ? '#cbd5e1' : '#475569',
-                            borderColor: isDark ? '#334155' : '#cbd5e1',
-                            borderWidth: 1,
-                            callbacks: {
-                                label: function(context) {
-                                    return context.dataset.label + ': ' + formatCurrency(context.raw);
-                                }
-                            }
-                        },
-                        legend: {
-                            labels: {
-                                color: isDark ? '#cbd5e1' : '#475569'
-                            }
-                        }
-                    },
-                    scales: {
-                        x: { 
-                            stacked: true,
-                            grid: { color: isDark ? '#334155' : '#f1f5f9' },
-                            ticks: { color: isDark ? '#94a3b8' : '#64748b' }
-                        },
-                        y: { 
-                            stacked: true,
-                            grid: { color: isDark ? '#334155' : '#f1f5f9' },
-                            ticks: { color: isDark ? '#94a3b8' : '#64748b' }
-                        }
-                    }
-                }
-            });
-        }
+window.addEventListener('DOMContentLoaded', () => {
+  let theme = 'dark';
+  try { theme = localStorage.getItem('theme') || 'dark'; } catch (e) {}
+  setTheme(theme);
+  loadData();
 
-        function saveData() {
-            const data = {
-                stockSelector: document.getElementById('stockSelector').value,
-                initial: document.getElementById('inputInitial').value,
-                monthly: document.getElementById('inputMonthly').value,
-                capGain: document.getElementById('inputCapGain').value,
-                divYield: document.getElementById('inputDivYield').value,
-                years: document.getElementById('inputYears').value,
-                drip: document.getElementById('inputDrip').value,
-                nhi: document.getElementById('inputNHI').checked,
-                inflation: document.getElementById('inputInflation').checked,
-                extra: extraInvestments
-            };
-            localStorage.setItem('stockHelperState_v5', JSON.stringify(data));
-        }
+  $('stockSelector').addEventListener('change', applyPreset);
+  ['inputCapGain','inputDivYield','inputExpense'].forEach(id => $(id).addEventListener('input', () => { markCustom(); calculate(); }));
+  ['inputInitial','inputMonthly','inputFee','inputIncomeTax','inputSpread','inputVol'].forEach(id => $(id).addEventListener('input', calculate));
+  ['inputDrip','inputFreq','inputNHI','inputSell','inputInflation','inputMode'].forEach(id => $(id).addEventListener('change', calculate));
+  $('inputYears').addEventListener('input', e => { $('yearLabel').textContent = e.target.value; calculate(); });
 
-        function loadData() {
-            const saved = localStorage.getItem('stockHelperState_v5') || localStorage.getItem('stockHelperState_v4');
-            if (saved) {
-                const data = JSON.parse(saved);
-                if(data.stockSelector) {
-                    const selector = document.getElementById('stockSelector');
-                    if(selector.querySelector(`option[value="${data.stockSelector}"]`)) {
-                        selector.value = data.stockSelector;
-                    }
-                }
-                document.getElementById('inputInitial').value = data.initial;
-                document.getElementById('inputMonthly').value = data.monthly;
-                document.getElementById('inputCapGain').value = data.capGain;
-                document.getElementById('inputDivYield').value = data.divYield;
-                document.getElementById('inputYears').value = data.years;
-                document.getElementById('yearLabel').innerText = data.years;
-                document.getElementById('inputDrip').value = data.drip;
-                document.getElementById('inputNHI').checked = data.nhi;
-                document.getElementById('inputInflation').checked = data.inflation;
-                extraInvestments = data.extra || [];
-            }
-        }
+  $('btnTheme').addEventListener('click', () => { setTheme(isDark() ? 'light' : 'dark'); calculate(); });
+  $('btnPng').addEventListener('click', exportPNG);
+  $('btnCsv').addEventListener('click', exportCSV);
+  $('btnAddExtra').addEventListener('click', () => {
+    extras.push({year: Math.min(5, num('inputYears', 5, 40, 20)), amount: 100000});
+    calculate();
+  });
 
-        function exportPNG() {
-            const canvas = document.getElementById('myChart');
-            const ctx = canvas.getContext('2d');
-            ctx.save();
-            ctx.globalCompositeOperation = 'destination-over';
-            const isDark = document.documentElement.classList.contains('dark');
-            ctx.fillStyle = isDark ? '#1e293b' : '#ffffff';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            const a = document.createElement('a');
-            a.href = canvas.toDataURL('image/png');
-            a.download = '存股資產成長圖表.png';
-            a.click();
-            
-            ctx.restore();
-            calculate();
-        }
+  // 事件委派:加碼列表
+  const box = $('extraContainer');
+  box.addEventListener('change', e => {
+    const t = e.target;
+    if (t.dataset.i === undefined) return;
+    const v = parseFloat(t.value);
+    extras[+t.dataset.i][t.dataset.f] = Number.isFinite(v) ? Math.max(0, t.dataset.f === 'year' ? Math.round(v) : v) : 0;
+    calculate();
+  });
+  box.addEventListener('click', e => {
+    const b = e.target.closest('[data-del]');
+    if (!b) return;
+    extras.splice(+b.dataset.del, 1);
+    calculate();
+  });
 
-        function exportCSV() {
-            let csvContent = "\uFEFF年份,累積投入本金,資本利得增值,累積配息,當年度總資產\n";
-            for (let i = 0; i < currentChartData.labels.length; i++) {
-                let p = currentChartData.principalData[i];
-                let c = currentChartData.capGainData[i];
-                let d = currentChartData.divData[i];
-                let total = p + c + d;
-                csvContent += `${currentChartData.labels[i]},${p},${c},${d},${total}\n`;
-            }
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = '存股試算報表.csv';
-            a.click();
-        }
-    </script>
+  calculate();
+});
+</script>
 </body>
 </html>
