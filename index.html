@@ -1,116 +1,126 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>存股小幫手 Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        // 設定 Tailwind 支援 class 模式切換
+        tailwind.config = {
+            darkMode: 'class',
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- 引入 FontAwesome 圖示 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-slate-100 text-slate-800 font-sans p-4 md:p-6 min-h-screen">
+<body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-sans p-4 md:p-6 min-h-screen transition-colors duration-300">
     <div class="max-w-7xl mx-auto space-y-6">
         
-        <!-- 頂部標題與匯出按鈕 -->
-        <div class="flex flex-col md:flex-row justify-between items-center bg-white p-4 rounded-2xl shadow-sm">
-            <h1 class="text-2xl font-bold text-indigo-700 mb-4 md:mb-0"><i class="fa-solid fa-chart-line mr-2"></i>存股小幫手 Pro</h1>
-            <div class="flex gap-3">
-                <button onclick="exportPNG()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm transition-colors"><i class="fa-solid fa-image mr-1"></i>下載圖表</button>
-                <button onclick="exportCSV()" class="px-4 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg text-sm transition-colors"><i class="fa-solid fa-file-csv mr-1"></i>匯出 CSV</button>
+        <!-- 頂部標題與控制按鈕 -->
+        <div class="flex flex-col md:flex-row justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm dark:shadow-lg border dark:border-slate-700 transition-colors duration-300">
+            <h1 class="text-2xl font-bold text-indigo-600 dark:text-cyan-400 mb-4 md:mb-0 tracking-wide"><i class="fa-solid fa-chart-line mr-2"></i>存股小幫手 Pro</h1>
+            <div class="flex flex-wrap gap-3 items-center">
+                <!-- 燈光模式切換按鈕 -->
+                <button onclick="toggleDarkMode()" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg text-sm transition-colors border dark:border-slate-600">
+                    <i id="themeIcon" class="fa-solid fa-moon mr-1"></i><span id="themeText">暗色模式</span>
+                </button>
+                <button onclick="exportPNG()" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg text-sm transition-colors border dark:border-slate-600"><i class="fa-solid fa-image mr-1"></i>下載圖表</button>
+                <button onclick="exportCSV()" class="px-4 py-2 bg-indigo-50 dark:bg-cyan-900/40 hover:bg-indigo-100 dark:hover:bg-cyan-800/60 text-indigo-700 dark:text-cyan-300 rounded-lg text-sm transition-colors border dark:border-indigo-100 dark:border-cyan-800"><i class="fa-solid fa-file-csv mr-1"></i>匯出 CSV</button>
             </div>
         </div>
 
         <!-- 黃金總結儀表板 -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-white p-5 rounded-2xl shadow-sm border-l-4 border-blue-500">
-                <p class="text-sm text-slate-500 mb-1">最終總資產 (目標達成)</p>
-                <h2 id="dashTotalAsset" class="text-3xl font-bold text-slate-800">0</h2>
-                <p id="dashInflationNote" class="text-xs text-rose-500 mt-2 hidden">*已折算 2% 通膨購買力</p>
+            <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm dark:shadow-lg border dark:border-slate-700 border-l-4 border-blue-500 dark:border-l-cyan-500 transition-colors duration-300">
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-1">最終總資產 (目標達成)</p>
+                <h2 id="dashTotalAsset" class="text-3xl font-bold text-slate-800 dark:text-slate-100">0</h2>
+                <p id="dashInflationNote" class="text-xs text-rose-500 dark:text-rose-400 mt-2 hidden"><i class="fa-solid fa-circle-info mr-1"></i>已折算 2% 通膨購買力</p>
             </div>
-            <div class="bg-white p-5 rounded-2xl shadow-sm border-l-4 border-indigo-400">
-                <p class="text-sm text-slate-500 mb-1">總投入成本 (含加碼)</p>
-                <h2 id="dashTotalCost" class="text-2xl font-bold text-slate-700">0</h2>
+            <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm dark:shadow-lg border dark:border-slate-700 border-l-4 border-indigo-400 dark:border-l-indigo-500 transition-colors duration-300">
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-1">總投入成本 (含加碼)</p>
+                <h2 id="dashTotalCost" class="text-2xl font-bold text-slate-700 dark:text-slate-200">0</h2>
             </div>
-            <div class="bg-white p-5 rounded-2xl shadow-sm border-l-4 border-emerald-400">
-                <p class="text-sm text-slate-500 mb-1">總投資淨利 (資本利得 + 配息)</p>
-                <h2 id="dashTotalProfit" class="text-2xl font-bold text-emerald-600">0</h2>
-                <p id="dashTaxNote" class="text-xs text-rose-500 mt-2 hidden">*已扣除二代健保補充保費</p>
+            <div class="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm dark:shadow-lg border dark:border-slate-700 border-l-4 border-emerald-400 dark:border-l-emerald-500 transition-colors duration-300">
+                <p class="text-sm text-slate-500 dark:text-slate-400 mb-1">總投資淨利 (資本利得 + 配息)</p>
+                <h2 id="dashTotalProfit" class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">0</h2>
+                <p id="dashTaxNote" class="text-xs text-rose-500 dark:text-rose-400 mt-2 hidden"><i class="fa-solid fa-circle-info mr-1"></i>已扣除二代健保補充保費</p>
             </div>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- 左側控制面板 -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm space-y-5 lg:col-span-1 h-fit">
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-lg border dark:border-slate-700 space-y-5 lg:col-span-1 h-fit transition-colors duration-300">
                 
                 <div class="space-y-4">
-                    <h3 class="text-lg font-bold text-slate-700 border-b pb-2">基礎參數設定</h3>
+                    <h3 class="text-lg font-bold text-slate-700 dark:text-slate-200 border-b dark:border-slate-700 pb-2">基礎參數設定</h3>
                     
                     <div>
-                        <label class="block text-sm font-medium text-slate-600 mb-1">初始本金 (元)</label>
-                        <input type="number" id="inputInitial" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none" value="100000" onchange="calculate()">
+                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">初始本金 (元)</label>
+                        <input type="number" id="inputInitial" class="w-full p-2 bg-white dark:bg-slate-900 border dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-400 dark:focus:ring-cyan-500 outline-none text-slate-800 dark:text-slate-100 transition-colors" value="100000" onchange="calculate()">
                     </div>
                     
                     <div>
-                        <label class="block text-sm font-medium text-slate-600 mb-1">每月定期定額 (元)</label>
-                        <input type="number" id="inputMonthly" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none" value="10000" onchange="calculate()">
+                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">每月定期定額 (元)</label>
+                        <input type="number" id="inputMonthly" class="w-full p-2 bg-white dark:bg-slate-900 border dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-400 dark:focus:ring-cyan-500 outline-none text-slate-800 dark:text-slate-100 transition-colors" value="10000" onchange="calculate()">
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-sm font-medium text-slate-600 mb-1">預期資本利得 (%)</label>
-                            <input type="number" id="inputCapGain" step="0.1" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none" value="5" onchange="calculate()">
+                            <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">預期資本利得 (%)</label>
+                            <input type="number" id="inputCapGain" step="0.1" class="w-full p-2 bg-white dark:bg-slate-900 border dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-400 dark:focus:ring-cyan-500 outline-none text-slate-800 dark:text-slate-100 transition-colors" value="5" onchange="calculate()">
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-slate-600 mb-1">預期殖利率 (%)</label>
-                            <input type="number" id="inputDivYield" step="0.1" class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none" value="4" onchange="calculate()">
+                            <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">預期殖利率 (%)</label>
+                            <input type="number" id="inputDivYield" step="0.1" class="w-full p-2 bg-white dark:bg-slate-900 border dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-400 dark:focus:ring-cyan-500 outline-none text-slate-800 dark:text-slate-100 transition-colors" value="4" onchange="calculate()">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-slate-600 mb-1 flex justify-between">
-                            <span>投資年限: <span id="yearLabel" class="text-indigo-600 font-bold">20</span> 年</span>
+                        <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1 flex justify-between">
+                            <span>投資年限: <span id="yearLabel" class="text-indigo-600 dark:text-cyan-400 font-bold">20</span> 年</span>
                         </label>
-                        <input type="range" id="inputYears" min="5" max="40" value="20" class="w-full accent-indigo-600" oninput="document.getElementById('yearLabel').innerText=this.value; calculate()">
+                        <input type="range" id="inputYears" min="5" max="40" value="20" class="w-full accent-indigo-600 dark:accent-cyan-500" oninput="document.getElementById('yearLabel').innerText=this.value; calculate()">
                     </div>
                 </div>
 
                 <div class="space-y-4 pt-2">
-                    <h3 class="text-lg font-bold text-slate-700 border-b pb-2">進階策略與稅費</h3>
+                    <h3 class="text-lg font-bold text-slate-700 dark:text-slate-200 border-b dark:border-slate-700 pb-2">進階策略與稅費</h3>
                     
                     <div class="flex items-center justify-between">
-                        <label class="text-sm font-medium text-slate-600">股息處置</label>
-                        <select id="inputDrip" class="p-1 border rounded text-sm outline-none" onchange="calculate()">
+                        <label class="text-sm font-medium text-slate-600 dark:text-slate-400">股息處置</label>
+                        <select id="inputDrip" class="p-1.5 bg-white dark:bg-slate-900 border dark:border-slate-600 rounded text-sm text-slate-800 dark:text-slate-200 outline-none" onchange="calculate()">
                             <option value="true">自動再投入 (DRIP)</option>
                             <option value="false">領出現金流</option>
                         </select>
                     </div>
 
                     <div class="flex items-center justify-between">
-                        <label class="text-sm font-medium text-slate-600">扣除二代健保 (2.11%)</label>
-                        <input type="checkbox" id="inputNHI" class="w-4 h-4 accent-rose-500" onchange="calculate()">
+                        <label class="text-sm font-medium text-slate-600 dark:text-slate-400">扣除二代健保 (2.11%)</label>
+                        <input type="checkbox" id="inputNHI" class="w-4 h-4 accent-rose-500 rounded bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600" onchange="calculate()">
                     </div>
 
                     <div class="flex items-center justify-between">
-                        <label class="text-sm font-medium text-slate-600">折算通膨購買力 (2%)</label>
-                        <input type="checkbox" id="inputInflation" class="w-4 h-4 accent-rose-500" onchange="calculate()">
+                        <label class="text-sm font-medium text-slate-600 dark:text-slate-400">折算通膨購買力 (2%)</label>
+                        <input type="checkbox" id="inputInflation" class="w-4 h-4 accent-rose-500 rounded bg-white dark:bg-slate-900 border-slate-300 dark:border-slate-600" onchange="calculate()">
                     </div>
                 </div>
 
                 <div class="space-y-3 pt-2">
-                    <div class="flex justify-between items-center border-b pb-2">
-                        <h3 class="text-lg font-bold text-slate-700">不定期大額加碼</h3>
-                        <button onclick="addExtraRow()" class="text-indigo-600 text-sm hover:text-indigo-800"><i class="fa-solid fa-plus"></i> 新增</button>
+                    <div class="flex justify-between items-center border-b dark:border-slate-700 pb-2">
+                        <h3 class="text-lg font-bold text-slate-700 dark:text-slate-200">不定期大額加碼</h3>
+                        <button onclick="addExtraRow()" class="text-indigo-600 dark:text-cyan-400 text-sm hover:underline"><i class="fa-solid fa-plus"></i> 新增</button>
                     </div>
                     <div id="extraContainer" class="space-y-2 max-h-32 overflow-y-auto pr-1">
-                        <!-- 動態產生的加碼列表將放在這 -->
+                        <!-- 動態加碼列表 -->
                     </div>
                 </div>
 
             </div>
 
             <!-- 右側圖表區塊 -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm lg:col-span-2 flex flex-col">
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-lg border dark:border-slate-700 lg:col-span-2 flex flex-col transition-colors duration-300">
                 <div class="relative w-full flex-grow" style="height: 450px;">
                     <canvas id="myChart"></canvas>
                 </div>
@@ -119,15 +129,45 @@
     </div>
 
     <script>
-        let currentChartData = {}; // 儲存圖表數據供 CSV 匯出使用
-        let extraInvestments = []; // 大額加碼資料 [{year: 3, amount: 100000}]
+        let currentChartData = {}; 
+        let extraInvestments = []; 
 
-        // 初始化與讀取 localStorage
         window.onload = () => {
+            // 初始化主題設定
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+                updateThemeButtonUI('light');
+            } else {
+                document.documentElement.classList.add('dark');
+                updateThemeButtonUI('dark');
+            }
+
             loadData();
             renderExtraRows();
             calculate();
         };
+
+        // 切換亮色 / 暗色模式
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            const theme = isDark ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+            updateThemeButtonUI(theme);
+            calculate(); // 重新繪製圖表以適應新主題的格線顏色
+        }
+
+        function updateThemeButtonUI(theme) {
+            const icon = document.getElementById('themeIcon');
+            const text = document.getElementById('themeText');
+            if (theme === 'dark') {
+                icon.className = "fa-solid fa-sun mr-1";
+                text.innerText = "亮色模式";
+            } else {
+                icon.className = "fa-solid fa-moon mr-1";
+                text.innerText = "暗色模式";
+            }
+        }
 
         function addExtraRow(year = 5, amount = 100000) {
             extraInvestments.push({ year, amount });
@@ -150,17 +190,17 @@
             const container = document.getElementById('extraContainer');
             container.innerHTML = '';
             if(extraInvestments.length === 0) {
-                container.innerHTML = '<p class="text-xs text-slate-400 text-center">無加碼計畫</p>';
+                container.innerHTML = '<p class="text-xs text-slate-400 dark:text-slate-500 text-center py-2">無加碼計畫</p>';
                 return;
             }
             extraInvestments.forEach((item, index) => {
                 container.innerHTML += `
-                    <div class="flex gap-2 items-center bg-slate-50 p-2 rounded">
-                        <span class="text-sm">第</span>
-                        <input type="number" min="1" max="40" class="w-16 p-1 border rounded text-sm text-center" value="${item.year}" onchange="updateExtra(${index}, 'year', this.value)">
-                        <span class="text-sm">年加碼</span>
-                        <input type="number" class="w-24 p-1 border rounded text-sm text-right flex-grow" value="${item.amount}" onchange="updateExtra(${index}, 'amount', this.value)">
-                        <button onclick="removeExtraRow(${index})" class="text-rose-500 hover:text-rose-700 px-2"><i class="fa-solid fa-trash"></i></button>
+                    <div class="flex gap-2 items-center bg-slate-50 dark:bg-slate-900 p-2 rounded border dark:border-slate-700">
+                        <span class="text-sm text-slate-600 dark:text-slate-400">第</span>
+                        <input type="number" min="1" max="40" class="w-16 p-1 bg-white dark:bg-slate-800 border dark:border-slate-600 rounded text-sm text-center text-slate-800 dark:text-slate-200 outline-none" value="${item.year}" onchange="updateExtra(${index}, 'year', this.value)">
+                        <span class="text-sm text-slate-600 dark:text-slate-400">年加碼</span>
+                        <input type="number" class="w-24 p-1 bg-white dark:bg-slate-800 border dark:border-slate-600 rounded text-sm text-right flex-grow text-slate-800 dark:text-slate-200 outline-none" value="${item.amount}" onchange="updateExtra(${index}, 'amount', this.value)">
+                        <button onclick="removeExtraRow(${index})" class="text-rose-500 hover:text-rose-700 px-2 transition-colors"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 `;
             });
@@ -171,7 +211,7 @@
         }
 
         function calculate() {
-            saveData(); // 儲存目前狀態
+            saveData(); 
 
             const initial = Number(document.getElementById('inputInitial').value);
             const monthly = Number(document.getElementById('inputMonthly').value);
@@ -188,50 +228,42 @@
             let divData = [];
             
             let currentPrincipal = initial;
-            let totalInvested = initial; // 純算投入成本
+            let totalInvested = initial; 
             let currentCapGain = 0;
             let currentDividend = 0;
 
-            // UI 狀態更新
             document.getElementById('dashInflationNote').style.display = inflation ? 'block' : 'none';
             document.getElementById('dashTaxNote').style.display = nhiTax ? 'block' : 'none';
 
             for (let i = 1; i <= years; i++) {
                 labels.push(`第 ${i} 年`);
 
-                // 處理不定期加碼
                 let yearlyExtra = extraInvestments.filter(e => e.year === i).reduce((sum, e) => sum + e.amount, 0);
                 if (yearlyExtra > 0) {
                     currentPrincipal += yearlyExtra;
                     totalInvested += yearlyExtra;
                 }
 
-                // 處理定期定額 (假設年初一次投入以便計算)
                 currentPrincipal += (monthly * 12);
                 totalInvested += (monthly * 12);
 
-                // 計算當年度配息
                 let rawDiv = currentPrincipal * divYield;
                 let actualDiv = rawDiv;
                 
-                // 二代健保計算 (假設單次發放且大於2萬)
                 if (nhiTax && rawDiv >= 20000) {
                     actualDiv = rawDiv * (1 - 0.0211);
                 }
 
-                // 處理股息再投入或領出
                 if (drip) {
                     currentPrincipal += actualDiv;
                 } else {
                     currentDividend += actualDiv;
                 }
 
-                // 計算資本利得增值
                 let yearlyGain = currentPrincipal * capGain;
                 currentCapGain += yearlyGain;
                 currentPrincipal += yearlyGain;
 
-                // 通膨購買力折算 (2%)
                 let discountRate = inflation ? Math.pow(1.02, i) : 1;
 
                 principalData.push(Math.round(totalInvested / discountRate));
@@ -239,7 +271,6 @@
                 divData.push(Math.round(currentDividend / discountRate));
             }
 
-            // 更新儀表板
             let finalAsset = (drip ? currentPrincipal : currentPrincipal + currentDividend);
             let finalDiscount = inflation ? Math.pow(1.02, years) : 1;
             
@@ -247,7 +278,6 @@
             document.getElementById('dashTotalCost').innerText = formatCurrency(totalInvested);
             document.getElementById('dashTotalProfit').innerText = formatCurrency((finalAsset - totalInvested) / finalDiscount);
 
-            // 儲存全域供匯出使用
             currentChartData = { labels, principalData, capGainData, divData };
             drawChart(labels, principalData, capGainData, divData, drip);
         }
@@ -259,6 +289,8 @@
                 window.myChartInstance.destroy();
             }
 
+            const isDark = document.documentElement.classList.contains('dark');
+
             window.myChartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -267,45 +299,62 @@
                         {
                             label: '累積投入本金',
                             data: principal,
-                            backgroundColor: '#6366f1', // Indigo-500
+                            backgroundColor: isDark ? '#4f46e5' : '#6366f1', 
                             stack: 'Stack 0',
                         },
                         {
                             label: '資本利得增值',
                             data: capGain,
-                            backgroundColor: '#38bdf8', // Light Blue-400
+                            backgroundColor: isDark ? '#0ea5e9' : '#38bdf8', 
                             stack: 'Stack 0',
                         },
                         {
                             label: drip ? '累積配息 (已再投入)' : '累積已領取配息',
                             data: dividend,
-                            backgroundColor: '#34d399', // Emerald-400
-                            stack: drip ? 'Stack 0' : 'Stack 1', // 沒投入就拆分成另一根柱子
+                            backgroundColor: isDark ? '#10b981' : '#34d399', 
+                            stack: drip ? 'Stack 0' : 'Stack 1',
                         }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    animation: false, // 關閉動畫防止閃爍
+                    animation: false,
                     plugins: {
                         tooltip: {
+                            backgroundColor: isDark ? 'rgba(15, 23, 42, 0.9)' : 'rgba(255, 255, 255, 0.9)',
+                            titleColor: isDark ? '#e2e8f0' : '#1e293b',
+                            bodyColor: isDark ? '#cbd5e1' : '#475569',
+                            borderColor: isDark ? '#334155' : '#cbd5e1',
+                            borderWidth: 1,
                             callbacks: {
                                 label: function(context) {
                                     return context.dataset.label + ': ' + formatCurrency(context.raw);
                                 }
                             }
+                        },
+                        legend: {
+                            labels: {
+                                color: isDark ? '#cbd5e1' : '#475569'
+                            }
                         }
                     },
                     scales: {
-                        x: { stacked: true },
-                        y: { stacked: true }
+                        x: { 
+                            stacked: true,
+                            grid: { color: isDark ? '#334155' : '#f1f5f9' },
+                            ticks: { color: isDark ? '#94a3b8' : '#64748b' }
+                        },
+                        y: { 
+                            stacked: true,
+                            grid: { color: isDark ? '#334155' : '#f1f5f9' },
+                            ticks: { color: isDark ? '#94a3b8' : '#64748b' }
+                        }
                     }
                 }
             });
         }
 
-        // --- LocalStorage 讀寫邏輯 ---
         function saveData() {
             const data = {
                 initial: document.getElementById('inputInitial').value,
@@ -318,11 +367,11 @@
                 inflation: document.getElementById('inputInflation').checked,
                 extra: extraInvestments
             };
-            localStorage.setItem('stockHelperState', JSON.stringify(data));
+            localStorage.setItem('stockHelperState_v3', JSON.stringify(data));
         }
 
         function loadData() {
-            const saved = localStorage.getItem('stockHelperState');
+            const saved = localStorage.getItem('stockHelperState_v3') || localStorage.getItem('stockHelperState_v2');
             if (saved) {
                 const data = JSON.parse(saved);
                 document.getElementById('inputInitial').value = data.initial;
@@ -338,16 +387,25 @@
             }
         }
 
-        // --- 匯出功能 ---
         function exportPNG() {
+            const canvas = document.getElementById('myChart');
+            const ctx = canvas.getContext('2d');
+            ctx.save();
+            ctx.globalCompositeOperation = 'destination-over';
+            const isDark = document.documentElement.classList.contains('dark');
+            ctx.fillStyle = isDark ? '#1e293b' : '#ffffff'; // 依照目前模式填入對應背景色
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
             const a = document.createElement('a');
-            a.href = window.myChartInstance.toBase64Image();
+            a.href = canvas.toDataURL('image/png');
             a.download = '存股資產成長圖表.png';
             a.click();
+            
+            ctx.restore();
+            calculate();
         }
 
         function exportCSV() {
-            // 加入 BOM 讓 Excel 支援中文 UTF-8
             let csvContent = "\uFEFF年份,累積投入本金,資本利得增值,累積配息,當年度總資產\n";
             for (let i = 0; i < currentChartData.labels.length; i++) {
                 let p = currentChartData.principalData[i];
