@@ -6,7 +6,6 @@
     <title>存股小幫手 Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        // 設定 Tailwind 支援 class 模式切換
         tailwind.config = {
             darkMode: 'class',
         }
@@ -22,9 +21,8 @@
         <div class="flex flex-col md:flex-row justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm dark:shadow-lg border dark:border-slate-700 transition-colors duration-300">
             <h1 class="text-2xl font-bold text-indigo-600 dark:text-cyan-400 mb-4 md:mb-0 tracking-wide"><i class="fa-solid fa-chart-line mr-2"></i>存股小幫手 Pro</h1>
             <div class="flex flex-wrap gap-3 items-center">
-                <!-- 燈光模式切換按鈕 -->
                 <button onclick="toggleDarkMode()" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg text-sm transition-colors border dark:border-slate-600">
-                    <i id="themeIcon" class="fa-solid fa-moon mr-1"></i><span id="themeText">暗色模式</span>
+                    <i id="themeIcon" class="fa-solid fa-sun mr-1"></i><span id="themeText">亮色模式</span>
                 </button>
                 <button onclick="exportPNG()" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 rounded-lg text-sm transition-colors border dark:border-slate-600"><i class="fa-solid fa-image mr-1"></i>下載圖表</button>
                 <button onclick="exportCSV()" class="px-4 py-2 bg-indigo-50 dark:bg-cyan-900/40 hover:bg-indigo-100 dark:hover:bg-cyan-800/60 text-indigo-700 dark:text-cyan-300 rounded-lg text-sm transition-colors border dark:border-indigo-100 dark:border-cyan-800"><i class="fa-solid fa-file-csv mr-1"></i>匯出 CSV</button>
@@ -53,6 +51,28 @@
             <!-- 左側控制面板 -->
             <div class="bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm dark:shadow-lg border dark:border-slate-700 space-y-5 lg:col-span-1 h-fit transition-colors duration-300">
                 
+                <!-- 標的快速選取與自訂新增區塊 -->
+                <div class="space-y-3 bg-indigo-50/50 dark:bg-slate-900/50 p-4 rounded-xl border dark:border-slate-700">
+                    <label class="block text-sm font-bold text-indigo-700 dark:text-cyan-400"><i class="fa-solid fa-wallet mr-1"></i>選擇或新增投資標的</label>
+                    <select id="stockSelector" class="w-full p-2 bg-white dark:bg-slate-800 border dark:border-slate-600 rounded-lg text-sm text-slate-800 dark:text-slate-200 outline-none focus:ring-2 focus:ring-indigo-400 dark:focus:ring-cyan-500" onchange="applyStockPreset()">
+                        <option value="custom">-- 手動自訂參數 --</option>
+                        <option value="0050">0050 元大台灣50 (報酬6%, 殖利率3%)</option>
+                        <option value="006208">006208 富邦台50 (報酬6%, 殖利率3%)</option>
+                        <option value="00878">00878 國泰永續高股息 (報酬4%, 殖利率6%)</option>
+                        <option value="00919">00919 群益台灣精選高息 (報酬3%, 殖利率8%)</option>
+                        <option value="SP500">VOO / S&P 500 美股大盤 (報酬8%, 殖利率1.5%)</option>
+                    </select>
+
+                    <!-- 新增自訂股票的小表單 -->
+                    <div class="pt-2 border-t dark:border-slate-700 space-y-2">
+                        <p class="text-xs text-slate-500 dark:text-slate-400">將目前的參數儲存為新標的：</p>
+                        <div class="flex gap-2">
+                            <input type="text" id="customStockName" placeholder="輸入股票名稱 (例如 2330 台積電)" class="w-full p-1.5 bg-white dark:bg-slate-800 border dark:border-slate-600 rounded text-xs text-slate-800 dark:text-slate-200 outline-none">
+                            <button onclick="saveCustomStock()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-xs transition-colors whitespace-nowrap"><i class="fa-solid fa-plus mr-1"></i>儲存</button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="space-y-4">
                     <h3 class="text-lg font-bold text-slate-700 dark:text-slate-200 border-b dark:border-slate-700 pb-2">基礎參數設定</h3>
                     
@@ -73,7 +93,7 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-600 dark:text-slate-400 mb-1">預期殖利率 (%)</label>
-                            <input type="number" id="inputDivYield" step="0.1" class="w-full p-2 bg-white dark:bg-slate-900 border dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-indigo-400 dark:focus:ring-cyan-500 outline-none text-slate-800 dark:text-slate-100 transition-colors" value="4" onchange="calculate()">
+                            <input type="number" id="inputDivYield" step="0.1" class="w-full p-2 bg-white dark:bg-slate-900 border dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-cyan-500 outline-none text-slate-800 dark:text-slate-100 transition-colors" value="4" onchange="calculate()">
                         </div>
                     </div>
 
@@ -129,11 +149,19 @@
     </div>
 
     <script>
+        // 預設標的庫與自訂標的資料庫
+        let stockPresets = {
+            "0050": { name: "0050 元大台灣50", capGain: 6.0, divYield: 3.0 },
+            "006208": { name: "006208 富邦台50", capGain: 6.0, divYield: 3.0 },
+            "00878": { name: "00878 國泰永續高股息", capGain: 4.0, divYield: 6.0 },
+            "00919": { name: "00919 群益台灣精選高息", capGain: 3.0, divYield: 8.0 },
+            "SP500": { name: "VOO / S&P 500 美股大盤", capGain: 8.0, divYield: 1.5 }
+        };
+
         let currentChartData = {}; 
         let extraInvestments = []; 
 
         window.onload = () => {
-            // 初始化主題設定
             const savedTheme = localStorage.getItem('theme') || 'dark';
             if (savedTheme === 'light') {
                 document.documentElement.classList.remove('dark');
@@ -143,18 +171,72 @@
                 updateThemeButtonUI('dark');
             }
 
+            loadCustomStocks(); // 載入使用者的自訂股票
             loadData();
             renderExtraRows();
             calculate();
         };
 
-        // 切換亮色 / 暗色模式
+        // 載入 localStorage 中的自訂股票並更新下拉選單
+        function loadCustomStocks() {
+            const savedCustom = localStorage.getItem('customStockPresets');
+            if (savedCustom) {
+                const customObj = JSON.parse(savedCustom);
+                stockPresets = { ...stockPresets, ...customObj };
+            }
+            updateStockSelectorUI();
+        }
+
+        // 更新下拉選單的 HTML 選項
+        function updateStockSelectorUI(selectedKey = 'custom') {
+            const selector = document.getElementById('stockSelector');
+            selector.innerHTML = `<option value="custom">-- 手動自訂參數 --</option>`;
+            
+            for (const [key, item] of Object.entries(stockPresets)) {
+                selector.innerHTML += `<option value="${key}">${item.name} (報酬${item.capGain}%, 殖利率${item.divYield}%)</option>`;
+            }
+            selector.value = selectedKey;
+        }
+
+        // 儲存使用者輸入的新股票
+        function saveCustomStock() {
+            const nameInput = document.getElementById('customStockName').value.trim();
+            if (!nameInput) {
+                alert('請輸入股票名稱！');
+                return;
+            }
+            const capGain = Number(document.getElementById('inputCapGain').value);
+            const divYield = Number(document.getElementById('inputDivYield').value);
+            
+            const customKey = 'custom_' + Date.now();
+            stockPresets[customKey] = { name: nameInput, capGain, divYield };
+
+            // 儲存至 localStorage
+            let userCustoms = JSON.parse(localStorage.getItem('customStockPresets') || '{}');
+            userCustoms[customKey] = stockPresets[customKey];
+            localStorage.setItem('customStockPresets', JSON.stringify(userCustoms));
+
+            updateStockSelectorUI(customKey);
+            document.getElementById('customStockName').value = '';
+            alert(`成功將「${nameInput}」加入自選股選單！`);
+        }
+
+        // 套用標的預設值
+        function applyStockPreset() {
+            const selected = document.getElementById('stockSelector').value;
+            if (selected !== 'custom' && stockPresets[selected]) {
+                document.getElementById('inputCapGain').value = stockPresets[selected].capGain;
+                document.getElementById('inputDivYield').value = stockPresets[selected].divYield;
+            }
+            calculate();
+        }
+
         function toggleDarkMode() {
             const isDark = document.documentElement.classList.toggle('dark');
             const theme = isDark ? 'dark' : 'light';
             localStorage.setItem('theme', theme);
             updateThemeButtonUI(theme);
-            calculate(); // 重新繪製圖表以適應新主題的格線顏色
+            calculate();
         }
 
         function updateThemeButtonUI(theme) {
@@ -357,6 +439,7 @@
 
         function saveData() {
             const data = {
+                stockSelector: document.getElementById('stockSelector').value,
                 initial: document.getElementById('inputInitial').value,
                 monthly: document.getElementById('inputMonthly').value,
                 capGain: document.getElementById('inputCapGain').value,
@@ -367,13 +450,19 @@
                 inflation: document.getElementById('inputInflation').checked,
                 extra: extraInvestments
             };
-            localStorage.setItem('stockHelperState_v3', JSON.stringify(data));
+            localStorage.setItem('stockHelperState_v5', JSON.stringify(data));
         }
 
         function loadData() {
-            const saved = localStorage.getItem('stockHelperState_v3') || localStorage.getItem('stockHelperState_v2');
+            const saved = localStorage.getItem('stockHelperState_v5') || localStorage.getItem('stockHelperState_v4');
             if (saved) {
                 const data = JSON.parse(saved);
+                if(data.stockSelector) {
+                    const selector = document.getElementById('stockSelector');
+                    if(selector.querySelector(`option[value="${data.stockSelector}"]`)) {
+                        selector.value = data.stockSelector;
+                    }
+                }
                 document.getElementById('inputInitial').value = data.initial;
                 document.getElementById('inputMonthly').value = data.monthly;
                 document.getElementById('inputCapGain').value = data.capGain;
@@ -393,7 +482,7 @@
             ctx.save();
             ctx.globalCompositeOperation = 'destination-over';
             const isDark = document.documentElement.classList.contains('dark');
-            ctx.fillStyle = isDark ? '#1e293b' : '#ffffff'; // 依照目前模式填入對應背景色
+            ctx.fillStyle = isDark ? '#1e293b' : '#ffffff';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
             const a = document.createElement('a');
